@@ -7,7 +7,7 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'sprockets/railtie'
 
-Bundler.require *Rails.groups(:assets => %w(development test))
+Bundler.require(:default, Rails.env)
 
 module LinuxfrOrg
   class Application < Rails::Application
@@ -26,13 +26,9 @@ module LinuxfrOrg
     config.encoding = "utf-8"
     config.time_zone = 'Paris'
 
-    config.filter_parameters += [:password, :password_confirmation]
-
     COOKIE_STORE_KEY = 'linuxfr.org_session'
     config.session_store :cookie_store, :key => COOKIE_STORE_KEY
 
-    config.assets.enabled = true
-    config.assets.version = "1.0"
     config.assets.js_compressor = :uglifier
     config.assets.precompile += %w(IE9.js html5.js sorttable.js)
     config.assets.precompile += %w(mobile.css print.css)
